@@ -1,4 +1,4 @@
-import {lighten} from "@polkadot/extension-ui/components/Identicon/icons/Polkadot"
+import {lighten} from "@polkadot/extension-ui/components/Identicon/icons/PolkadotDark"
 
 describe('Identicon', () => {
   describe('lighten', () => {

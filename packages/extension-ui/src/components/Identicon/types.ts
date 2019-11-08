@@ -20,6 +20,6 @@ export interface IdentityProps extends BaseProps {
   onCopy?: (value: string) => void;
   prefix?: Prefix;
   size?: number;
-  theme?: 'empty' | 'polkadot';
+  theme?: 'empty' | 'polkadot-light' | 'polkadot-dark' | 'polkadot';
   value?: string | Uint8Array | null;
 }
