@@ -15,12 +15,15 @@ import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
 import IconBox from './IconBox';
 import { AccountContext } from './contexts';
 
+import copyButton from '../assets/copyButton.png';
+
 interface Props {
   address?: string | null;
   children?: React.ReactNode;
   className?: string;
   name?: React.ReactNode | null;
   genesisHash?: string | null;
+  buttons?: React.ReactNode | null;
 }
 
 // find an account in our list
@@ -49,7 +52,7 @@ function recodeAddress (address: string, accounts: AccountJson[], genesisHash?: 
   ];
 }
 
-function Address ({ address, children, className, genesisHash, name }: Props): React.ReactElement<Props> {
+function Address ({ address, children, className, genesisHash, name, buttons }: Props): React.ReactElement<Props> {
   const accounts = useContext(AccountContext);
   const [account, setAccount] = useState<AccountJson | null>(null);
   const [chain, setChain] = useState<Chain | null>(null);
@@ -62,13 +65,12 @@ function Address ({ address, children, className, genesisHash, name }: Props): R
 
     const [formatted, account, chain] = recodeAddress(address, accounts, genesisHash);
 
-    setFormatted(formatted);
+    setFormatted(formatted.slice(0, 35)+ '...');
     setChain(chain);
     setAccount(account);
   }, [address]);
 
-  const theme = ((chain && chain.icon) || 'polkadot') as 'polkadot';
-  console.log(theme);
+  const theme = ((chain && chain.icon) || 'polkadot-dark') as 'polkadot';
   return (
     <IconBox
       banner={chain && chain.genesisHash && chain.name}
@@ -81,11 +83,15 @@ function Address ({ address, children, className, genesisHash, name }: Props): R
           value={address}
         />
       }
+      buttons={buttons}
       intro={
-        <>
+        <Content>
           <div className='name'>{name || (account && account.name) || '<unknown>'}</div>
-          <div className='address'>{formatted || '<unknown>'}</div>
-        </>
+          <AddressInfo>
+            {formatted || '<unknown>'}
+            <CopyButton src={copyButton} alt='copy-button'/>
+          </AddressInfo>
+        </Content>
       }
     >
       {children}
@@ -93,12 +99,28 @@ function Address ({ address, children, className, genesisHash, name }: Props): R
   );
 }
 
+const CopyButton = styled.img`
+  width: 12px;
+  height: 14px;
+  align-self: center;
+  opacity: 1;
+`;
+
+const Content = styled.div`
+  width: 300px;
+`;
+
+const AddressInfo = styled.div`
+  font-size: 12px;
+  opacity: 0.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  justify-content: space-between;
+`;
+
 export default styled(Address)`
-  .address {
-    opacity: 0.5;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+
 
   .name {
     padding-bottom: 0.5rem;

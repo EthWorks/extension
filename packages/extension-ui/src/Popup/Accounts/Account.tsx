@@ -7,7 +7,7 @@ import { AccountJson } from '@polkadot/extension/background/types';
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 
-import { ActionBar, ActionContext, Address, Link } from '../../components';
+import { ActionContext, Address, Link } from '../../components';
 import { editAccount } from '../../messaging';
 import { Name } from '../../partials';
 
@@ -37,6 +37,14 @@ function Account ({ address, className, isExternal }: Props): React.ReactElement
       address={address}
       className={className}
       name={editedName}
+      buttons={
+        <>
+      <MenuItem onClick={_toggleEdit}>Rename</MenuItem>
+      <Break/>
+      {!isExternal && <MenuItem isDanger to={`/account/export/${address}`}>Export Account</MenuItem>}
+      <MenuItem isDanger to={`/account/forget/${address}`}>Forget Account</MenuItem>
+      </>
+      }
     >
       {isEditing && (
         <Name
@@ -48,16 +56,20 @@ function Account ({ address, className, isExternal }: Props): React.ReactElement
           onChange={setName}
         />
       )}
-      <ActionBar>
-        <div>
-          <Link isDanger to={`/account/forget/${address}`}>Forget</Link>
-          {!isExternal && <Link to={`/account/export/${address}`}>Export</Link>}
-        </div>
-        <Link onClick={_toggleEdit}>Edit</Link>
-      </ActionBar>
     </Address>
   );
 }
+
+const MenuItem = styled(Link)`
+  padding: 4px 16px;
+  display: block;
+  border-radius: 8px;
+`;
+
+
+const Break = styled.div`
+  height: 25px;
+`;
 
 export default styled(Account)`
   .edit-name {

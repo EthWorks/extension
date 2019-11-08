@@ -28,9 +28,11 @@ export default styled(Box)`
   color: ${({ theme }): string => theme.color};
   font-family: ${({ theme }): string => theme.fontFamily};
   font-size: ${({ theme }): string => theme.fontSize};
-  margin: ${({ theme }): string => theme.boxMargin};
+  margin: 0 -1rem;
   padding: 0.75rem 1rem;
   position: relative;
+  display: flex;
+  justify-content: space-around;
 
   .banner {
     background: darkorange;
