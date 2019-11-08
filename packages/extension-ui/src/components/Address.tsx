@@ -8,7 +8,7 @@ import { Chain } from '@polkadot/extension-chains/types';
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import findChain from '@polkadot/extension-chains';
-import Identicon from '@polkadot/react-identicon';
+import Identicon from '@polkadot/extension-ui/components/Identicon';
 import settings from '@polkadot/ui-settings';
 import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
 
@@ -68,7 +68,7 @@ function Address ({ address, children, className, genesisHash, name }: Props): R
   }, [address]);
 
   const theme = ((chain && chain.icon) || 'polkadot') as 'polkadot';
-
+  console.log(theme);
   return (
     <IconBox
       banner={chain && chain.genesisHash && chain.name}
