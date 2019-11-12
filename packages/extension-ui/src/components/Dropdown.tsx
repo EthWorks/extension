@@ -62,7 +62,7 @@ export default styled(Dropdown)`
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background: ${({ isError, isReadOnly, theme }): string => isError ? theme.box.error.background : (isReadOnly ? '#eee' : '#fff')};
+    background: ${({ theme }): string => theme.background};
     border-color: ${({ isError, theme }): string => isError ? theme.box.error.border : theme.inputBorder};
     border-radius: ${({ theme }): string => theme.borderRadius};
     border-style: solid;

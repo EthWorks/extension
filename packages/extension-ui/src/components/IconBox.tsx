@@ -31,7 +31,7 @@ function IconBox ({ banner, children, className, icon, intro, buttons }: Props):
         <div className='outer-icon'>{icon}</div>
         <Intro>{intro}</Intro>
         <Dropdown>
-          <Button onClick={() => setVisible(!visible)}>
+          <Button onClick={(): void => setVisible(!visible)}>
             <OptionsButton src={options} alt='options'/>
           </Button>
           <DropdownContent isVisible={visible}>
@@ -66,7 +66,7 @@ const Button = styled.button`
 `;
 
 const DropdownContent = styled.ul<{isVisible: boolean}>`
-  display: ${({ isVisible }) => isVisible ? 'block' : 'none'};
+  display: ${({ isVisible }): string => isVisible ? 'block' : 'none'};
   position: absolute;
   border-radius: 8px;
   background: ${({ theme }): string => theme.background};

@@ -8,8 +8,8 @@ import { Chain } from '@polkadot/extension-chains/types';
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import findChain from '@polkadot/extension-chains';
-import Identicon from '@polkadot/extension-ui/components/Identicon';
 import settings from '@polkadot/ui-settings';
+import Identicon from '@polkadot/react-identicon';
 import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
 
 import IconBox from './IconBox';
