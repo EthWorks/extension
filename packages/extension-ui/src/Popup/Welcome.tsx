@@ -4,7 +4,7 @@
 
 import React, { useContext } from 'react';
 
-import { ActionContext, Box, Button, Header } from '../components';
+import { ActionContext, Button, Header } from '../components';
 
 type Props = {};
 
@@ -19,7 +19,7 @@ export default function Welcome (): React.ReactElement<Props> {
   return (
     <div>
       <Header label='welcome' />
-      <Box>
+      <div>
         Before we start, just a couple of notes regarding use -
         <ul>
           <li>We do not send any clicks, pageviews or events to a central server</li>
@@ -31,7 +31,7 @@ export default function Welcome (): React.ReactElement<Props> {
           label='Understood, let me continue'
           onClick={_onClick}
         />
-      </Box>
+      </div>
     </div>
   );
 }
