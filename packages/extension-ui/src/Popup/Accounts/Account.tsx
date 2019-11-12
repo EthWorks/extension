@@ -39,11 +39,11 @@ function Account ({ address, className, isExternal }: Props): React.ReactElement
       name={editedName}
       buttons={
         <>
-      <MenuItem onClick={_toggleEdit}>Rename</MenuItem>
-      <Break/>
-      {!isExternal && <MenuItem isDanger to={`/account/export/${address}`}>Export Account</MenuItem>}
-      <MenuItem isDanger to={`/account/forget/${address}`}>Forget Account</MenuItem>
-      </>
+          <MenuItem onClick={_toggleEdit}>Rename</MenuItem>
+          <Break/>
+          {!isExternal && <MenuItem isDanger to={`/account/export/${address}`}>Export Account</MenuItem>}
+          <MenuItem isDanger to={`/account/forget/${address}`}>Forget Account</MenuItem>
+        </>
       }
     >
       {isEditing && (
@@ -65,7 +65,6 @@ const MenuItem = styled(Link)`
   display: block;
   border-radius: 8px;
 `;
-
 
 const Break = styled.div`
   height: 25px;

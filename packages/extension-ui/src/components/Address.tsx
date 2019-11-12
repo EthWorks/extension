@@ -65,7 +65,7 @@ function Address ({ address, children, className, genesisHash, name, buttons }: 
 
     const [formatted, account, chain] = recodeAddress(address, accounts, genesisHash);
 
-    setFormatted(formatted.slice(0, 35)+ '...');
+    setFormatted(formatted.slice(0, 35) + '...');
     setChain(chain);
     setAccount(account);
   }, [address]);

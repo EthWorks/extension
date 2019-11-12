@@ -11,9 +11,8 @@ import styled from 'styled-components';
 import settings, { ICON_DEFAULT_HOST } from '@polkadot/ui-settings';
 import { isHex, isU8a, u8aToHex } from '@polkadot/util';
 import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
-import {Empty} from '@polkadot/react-identicon';
-import {PolkadotLight, PolkadotDark} from './icons';
-
+import { Empty } from '@polkadot/react-identicon';
+import { PolkadotLight, PolkadotDark } from './icons';
 
 interface State {
   address: string;
@@ -23,7 +22,7 @@ interface State {
 const DEFAULT_SIZE = 64;
 const Components: Record<string, React.ComponentType<ComponentProps>> = {
   'polkadot-light': PolkadotLight,
-  'polkadot': PolkadotDark
+  polkadot: PolkadotDark
 };
 
 const Wrapper = styled.div`

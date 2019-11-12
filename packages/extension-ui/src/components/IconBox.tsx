@@ -2,9 +2,8 @@
 // This software may be modified and distributed under the terms
 // of the Apache-2.0 license. See the LICENSE file for details.
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import eyeButton from '../assets/eyeButton.png';
 import options from '../assets/options.png';
 
 import Box from './Box';
@@ -16,25 +15,24 @@ interface Props {
   icon: React.ReactNode;
   intro: React.ReactNode;
   name?: React.ReactNode | null;
-  theme?: 'polkadot' | 'substrate';
+  theme?: 'polkadot-light' | 'polkadot-dark' | 'polkadot';
   buttons?: React.ReactNode;
 }
 
-function IconBox({banner, children, className, icon, intro, buttons}: Props): React.ReactElement<Props> {
-const [visible, setVisible] = useState(false);
+function IconBox ({ banner, children, className, icon, intro, buttons }: Props): React.ReactElement<Props> {
+  const [visible, setVisible] = useState(false);
 
   return (
-    <>
+    <div className={className}>
       <Box
         banner={banner}
         className='details'
       >
-        <EyeButton src={eyeButton} alt='eyeButton' />
         <div className='outer-icon'>{icon}</div>
         <Intro>{intro}</Intro>
         <Dropdown>
           <Button onClick={() => setVisible(!visible)}>
-          <OptionsButton src={options} alt='options'/>
+            <OptionsButton src={options} alt='options'/>
           </Button>
           <DropdownContent isVisible={visible}>
             {buttons}
@@ -42,14 +40,9 @@ const [visible, setVisible] = useState(false);
         </Dropdown>
       </Box>
       <div className='children'>{children}</div>
-    </>
+    </div>
   );
 }
-
-const EyeButton = styled.img`
-  width: 18px;
-  height: 12px;
-`;
 
 const OptionsButton = styled.img`
   width: 6px;
@@ -73,7 +66,7 @@ const Button = styled.button`
 `;
 
 const DropdownContent = styled.ul<{isVisible: boolean}>`
-  display: ${({ isVisible}) => isVisible? 'block' : 'none'};
+  display: ${({ isVisible }) => isVisible ? 'block' : 'none'};
   position: absolute;
   border-radius: 8px;
   background: ${({ theme }): string => theme.background};

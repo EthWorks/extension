@@ -15,11 +15,21 @@
 //   - Split calculations into relevant functions
 //   - Move constants to file-level
 //   - Overall it is now just a static component, expecting an address as an input value
+//   - Make new dark theme mode
 
 import { Props as BaseProps } from '../types';
 
 import React from 'react';
 import generateIcon, { Circle } from '@polkadot/ui-shared/polkadotIcon';
+
+export function lighten (hslColor: string) {
+  const hslRegex = RegExp(/(\d+), ?(\d+)%, ?(\d+)%/);
+  const matches = hslRegex.exec(hslColor);
+  if (!matches || parseInt(matches[3]) >= 40) {
+    return hslColor;
+  }
+  return `hsl(${matches[1]}, ${matches[2]}%, ${parseInt(matches[3]) + 50}%)`;
+}
 
 interface Props extends BaseProps {
   sixPoint?: boolean;
@@ -48,7 +58,7 @@ export default class Identicon extends React.PureComponent<Props> {
   }
 
   private renderCircle = ({ cx, cy, r, fill }: Circle, index: number): React.ReactNode => {
-    const fillColor = index === 0 ? 'black' : lighten(fill)
+    const fillColor = index === 0 ? 'black' : lighten(fill);
 
     return (
       <circle
@@ -60,12 +70,4 @@ export default class Identicon extends React.PureComponent<Props> {
       />
     );
   }
-}
-
-export function lighten (hslColor: string) {
-  const matches = hslColor.match(/(\d+), ?(\d+)%, ?(\d+)%/)
-  if (!matches || parseInt(matches[3]) >= 40) {
-    return hslColor
-  }
-  return `hsl(${matches[1]}, ${matches[2]}%, ${parseInt(matches[3]) + 50}%)`
 }
