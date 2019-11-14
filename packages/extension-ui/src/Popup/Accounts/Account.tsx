@@ -72,9 +72,9 @@ const Break = styled.div`
 
 export default styled(Account)`
   .edit-name {
-    left: 3rem;
+    left: 4.25rem;
     position: absolute;
-    right: 0.75rem;
-    top: -0.5rem;
+    right: 1.25rem;
+    top: -0.25rem;
   }
 `;

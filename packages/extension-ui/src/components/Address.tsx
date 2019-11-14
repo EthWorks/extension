@@ -14,6 +14,7 @@ import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
 
 import IconBox from './IconBox';
 import { AccountContext } from './contexts';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 import copyButton from '../assets/copyButton.png';
 
@@ -65,12 +66,12 @@ function Address ({ address, children, className, genesisHash, name, buttons }: 
 
     const [formatted, account, chain] = recodeAddress(address, accounts, genesisHash);
 
-    setFormatted(formatted.slice(0, 35) + '...');
+    setFormatted(formatted);
     setChain(chain);
     setAccount(account);
   }, [address]);
 
-  const theme = ((chain && chain.icon) || 'polkadot-dark') as 'polkadot';
+  const theme = ((chain && chain.icon) || 'polkadot') as 'polkadot';
   return (
     <IconBox
       banner={chain && chain.genesisHash && chain.name}
@@ -88,8 +89,10 @@ function Address ({ address, children, className, genesisHash, name, buttons }: 
         <Content>
           <div className='name'>{name || (account && account.name) || '<unknown>'}</div>
           <AddressInfo>
-            {formatted || '<unknown>'}
-            <CopyButton src={copyButton} alt='copy-button'/>
+            <PublicKey>{formatted || '<unknown>'}</PublicKey>
+            {buttons && address && <CopyToClipboard text={address}>
+              <CopyButton src={copyButton} alt='copy-button'/>
+            </CopyToClipboard>}
           </AddressInfo>
         </Content>
       }
@@ -99,11 +102,21 @@ function Address ({ address, children, className, genesisHash, name, buttons }: 
   );
 }
 
+const PublicKey = styled.div`
+  opacity: 0.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 8px;
+`;
+
 const CopyButton = styled.img`
   width: 12px;
   height: 14px;
   align-self: center;
-  opacity: 1;
+  opacity: 0.5;
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 const Content = styled.div`
