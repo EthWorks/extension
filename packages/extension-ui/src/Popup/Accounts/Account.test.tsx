@@ -25,17 +25,17 @@ describe('Account component', () => {
   it('shows Export option if account is not external', () => {
     wrapper = mountAccountComponent({ isExternal: false });
 
-    expect(wrapper.find('a').length).toBe(3);
-    expect(wrapper.find('a').at(0).text()).toContain('Rename');
-    expect(wrapper.find('a').at(1).text()).toContain('Export Account');
-    expect(wrapper.find('a').at(2).text()).toContain('Forget Account');
+    expect(wrapper.find('MenuItem').length).toBe(3);
+    expect(wrapper.find('MenuItem').at(0).text()).toBe('Rename');
+    expect(wrapper.find('MenuItem').at(1).text()).toBe('Export Account');
+    expect(wrapper.find('MenuItem').at(2).text()).toBe('Forget Account');
   });
 
   it('does not show Export option if account is external', () => {
     wrapper = mountAccountComponent({ isExternal: true });
 
-    expect(wrapper.find('a').length).toBe(2);
-    expect(wrapper.find('a').at(0).text()).toContain('Rename');
-    expect(wrapper.find('a').at(1).text()).toContain('Forget Account');
+    expect(wrapper.find('MenuItem').length).toBe(2);
+    expect(wrapper.find('MenuItem').at(0).text()).toBe('Rename');
+    expect(wrapper.find('MenuItem').at(1).text()).toBe('Forget Account');
   });
 });

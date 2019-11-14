@@ -66,6 +66,8 @@ const MenuItem = styled(Link)`
   border-radius: 8px;
 `;
 
+MenuItem.displayName = 'MenuItem';
+
 const Break = styled.div`
   height: 25px;
 `;
