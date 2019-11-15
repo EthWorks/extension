@@ -21,15 +21,15 @@ function Box ({ banner, children, className }: Props): React.ReactElement<Props>
 }
 
 export default styled(Box)`
-  background: ${({ theme }): string => theme.background};
+  background: ${({ theme }): string => theme.readonlyInputBackground};
   border: ${({ theme }): string => theme.boxBorder};
   border-radius: ${({ theme }): string => theme.borderRadius};
   box-shadow: ${({ theme }): string => theme.boxShadow};
   color: ${({ theme }): string => theme.color};
   font-family: ${({ theme }): string => theme.fontFamily};
   font-size: ${({ theme }): string => theme.fontSize};
-  margin: 0 -1rem;
-  padding: 0.75rem 1rem;
+  margin: ${({ theme }): string => theme.boxMargin};
+  padding: ${({ theme }): string => theme.boxPadding};
   position: relative;
   display: flex;
   justify-content: space-around;

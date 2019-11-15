@@ -9,7 +9,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import findChain from '@polkadot/extension-chains';
 import settings from '@polkadot/ui-settings';
-import Identicon from '@polkadot/react-identicon';
 import { decodeAddress, encodeAddress } from '@polkadot/util-crypto';
 
 import IconBox from './IconBox';
@@ -17,6 +16,7 @@ import { AccountContext } from './contexts';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
 import copyButton from '../assets/copyButton.png';
+import { Identicon } from '@polkadot/extension-ui/components';
 
 interface Props {
   address?: string | null;
@@ -78,9 +78,7 @@ function Address ({ address, children, className, genesisHash, name, buttons }: 
       className={className}
       icon={
         <Identicon
-          className='icon'
-          size={64}
-          theme={theme}
+          iconTheme={theme}
           value={address}
         />
       }
@@ -133,8 +131,6 @@ const AddressInfo = styled.div`
 `;
 
 export default styled(Address)`
-
-
   .name {
     padding-bottom: 0.5rem;
   }

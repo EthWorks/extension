@@ -3,6 +3,7 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import React, { useContext } from 'react';
+import QrImage from '../../assets/qr.svg';
 
 import {
   AccountContext,
@@ -11,10 +12,49 @@ import {
   Link,
   MediaContext,
   AddAccount,
-  ButtonArea,
-  VerticalSpace
+  ButtonArea
 } from '../../components';
 import Account from './Account';
+import styled from 'styled-components';
+
+const ButtonWithSubtitle = styled(Button)`
+  margin-right: 8px;
+  
+  button {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  h4 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 20px;
+  }
+  p {
+    margin: 0;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+  }
+`;
+
+const QrButton = styled(Button)`
+  width: 60px;
+  
+  span {
+    width: 20px;
+    height: 20px;
+    display: block;
+    mask: url(${QrImage});
+    mask-size: cover;
+    background: ${({ theme }): string => theme.color}; 
+  }
+`;
+
+const AccountsArea = styled.div`
+  height: 100%;
+  overflow: scroll;
+`;
 
 type Props = {};
 
@@ -38,28 +78,29 @@ export default function Accounts (): React.ReactElement<Props> {
           >
             You currently don&apos;t have any accounts. Either create a new account or if you have an existing account you wish to use, import it with the seed phrase.
           </AddAccount>
-          : accounts.map((json, index): React.ReactNode => (
-            <Account
-              {...json}
-              key={`${index}:${json.address}`}
-            />
-          ))
+          : <AccountsArea>
+            {
+              accounts.map((json, index): React.ReactNode => (
+                <Account
+                  {...json}
+                  key={`${index}:${json.address}`}
+                />))
+            }
+          </AccountsArea>
       }
-      <VerticalSpace/>
       <ButtonArea>
-        <Button
-          label='I want to create a new account with a new seed'
-          to='/account/create'
-        />
-        <Button
-          label='I have a pre-existing seed, import the account'
-          to='/account/import-seed'
-        />
+        <ButtonWithSubtitle to='/account/create'>
+          <h4>Create New Account</h4>
+          <p>With new seed</p>
+        </ButtonWithSubtitle>
+        <ButtonWithSubtitle to='/account/import-seed'>
+          <h4>Import an Account</h4>
+          <p>I have a pre-existing seed</p>
+        </ButtonWithSubtitle>
         {mediaAllowed && (
-          <Button
-            label='I have an external account, add it via QR'
-            to='/account/import-qr'
-          />
+          <QrButton to='/account/import-qr'>
+            <span/>
+          </QrButton>
         )}
       </ButtonArea>
     </>
