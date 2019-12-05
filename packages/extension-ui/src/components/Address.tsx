@@ -18,7 +18,8 @@ import Menu from '@polkadot/extension-ui/components/Menu';
 import DetailsImg from '../assets/details.svg';
 import copyButton from '../assets/copy.svg';
 import { useOutsideClick } from '@polkadot/extension-ui/hooks';
-import CopyToClipboard from 'react-copy-to-clipboard'
+import CopyToClipboard from 'react-copy-to-clipboard';
+import { useToast } from './Toast/useToast';
 
 interface Props {
   address?: string | null;
@@ -76,6 +77,7 @@ function Address ({ address, className, children, genesisHash, name, actions }: 
   }, [address]);
 
   const theme = ((chain && chain.icon) || 'polkadot') as 'polkadot';
+  const { show } = useToast();
 
   return (
     <div className={className}>
@@ -89,8 +91,8 @@ function Address ({ address, className, children, genesisHash, name, actions }: 
             <Name>{name || (account && account.name) || '<unknown>'}</Name>
             <CopyAddress>
               <FullAddress>{formatted || '<unknown>'}</FullAddress>
-              <CopyToClipboard text={formatted && formatted || ''}>
-                <Svg src={copyButton}/>
+              <CopyToClipboard text={(formatted && formatted) || ''} >
+                <Svg src={copyButton} onClick={(): void => show('Copied')}/>
               </CopyToClipboard>
             </CopyAddress>
           </Info>
@@ -105,26 +107,9 @@ function Address ({ address, className, children, genesisHash, name, actions }: 
         </AccountInfoRow>
         {children}
       </div>
-      {/* <Copied>Copied</Copied> */}
     </div>
   );
 }
-
-// const Copied = styled.div`
-//   position: fixed;
-//   display: block;
-//   width: 80px;
-//   height: 35px;
-//   text-align: center;
-//   padding-top: 5px;
-//   bottom: 0;
-
-//   && {
-//     margin: auto;
-//     border-radius: 25px;
-//     background: #ff00ff;
-//   }
-// `;
 
 const CopyAddress = styled.div`
   display: flex;

@@ -4,6 +4,7 @@
 
 import React, { useState } from 'react';
 import { Button, ButtonArea, Checkbox, MnemonicSeed, VerticalSpace, Warning } from '../../components';
+import { useToast } from '@polkadot/extension-ui/components/Toast/useToast';
 
 interface Props {
   seed: string;
@@ -31,6 +32,7 @@ const onPrint = (seed: string) => (): void => {
 
 function Mnemonic ({ seed, onNextStep }: Props): React.ReactElement<Props> {
   const [isMnemonicSaved, setIsMnemonicSaved] = useState(false);
+  const { show } = useToast();
   return (
     <>
       <Warning>
@@ -39,7 +41,10 @@ function Mnemonic ({ seed, onNextStep }: Props): React.ReactElement<Props> {
       </Warning>
       <MnemonicSeed
         seed={seed}
-        onCopy={onCopy}
+        onCopy={(): void => {
+          onCopy();
+          show('copied');
+        }}
         onPrint={onPrint(seed)}
       />
       <VerticalSpace />
