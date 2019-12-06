@@ -105,8 +105,8 @@ function Address ({ address, className, children, genesisHash, name, actions }: 
             </>
           )}
         </AccountInfoRow>
-        {children}
       </div>
+      {children}
     </div>
   );
 }
@@ -143,6 +143,9 @@ const Info = styled.div`
 `;
 
 const Name = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 300px;
   margin: 2px 0;
   font-weight: 600;
   font-size: 16px;
@@ -150,7 +153,7 @@ const Name = styled.div`
 `;
 
 const FullAddress = styled.div`
-  width: 250px;
+  width: 300px;
   overflow: hidden;
   text-overflow: ellipsis;
   color: ${({ theme }): string => theme.labelColor};
