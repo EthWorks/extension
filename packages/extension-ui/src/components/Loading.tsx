@@ -3,6 +3,9 @@
 // of the Apache-2.0 license. See the LICENSE file for details.
 
 import React from 'react';
+import styled from 'styled-components';
+import { Header } from '.';
+
 
 interface Props {
   children?: React.ReactNode;
@@ -11,7 +14,10 @@ interface Props {
 export default function Loading ({ children }: Props): React.ReactElement<Props> {
   if (!children) {
     return (
-      <div>... loading ...</div>
+      <>
+      <Header />
+      <LoadingText>... loading ...</LoadingText>
+      </>
     );
   }
 
@@ -19,3 +25,12 @@ export default function Loading ({ children }: Props): React.ReactElement<Props>
     <>{children}</>
   );
 }
+
+const LoadingText = styled.div`
+  text-align: center;
+  vertical-align: middle;
+  line-height: 550px;
+  color: ${({ theme }): string => theme.textColor};
+  font-family: ${({ theme }): string => theme.fontFamily};
+  font-size: 20px;
+`;
