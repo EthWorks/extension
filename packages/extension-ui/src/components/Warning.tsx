@@ -30,7 +30,7 @@ const WarningImage = styled(Svg)<Pick<Props, 'danger'>>`
   width: 16px;
   height: 14px;
   margin: 5px 10px 5px 0;
-  background: ${({ danger, theme }): string => danger ? theme.iconDangerColor : theme.iconWarningColor};  
+  background: ${({ danger, theme }): string => danger ? theme.iconDangerColor : theme.iconWarningColor};
 `;
 
 export default styled(Warning)`
@@ -38,6 +38,6 @@ export default styled(Warning)`
   flex-direction: row;
   padding-left: ${({ danger }): string => danger ? '18px' : ''};
   color: ${({ theme }): string => theme.subTextColor};
-  margin-right: 20px;
+  padding-right: 30px;
   border-left: ${({ danger, theme }): string => danger ? `0.25rem solid ${theme.buttonBackgroundDanger}` : ''};
 `;
