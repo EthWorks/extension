@@ -6,28 +6,27 @@ import React, { useCallback, useContext, useState } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
 import styled from 'styled-components';
 
-import { ActionContext, Address, Button, ButtonArea, InputWithLabel, VerticalSpace } from '../../components';
+import { AccountContext, ActionContext, Address, Button, ButtonArea, InputWithLabel, VerticalSpace } from '../../components';
 import { deriveAccount, validateAccount } from '../../messaging';
 import { DerivationPath, Name, Password } from '../../partials';
 import Step from './Step';
+import { AccountJson } from '@polkadot/extension-base/background/types';
 
 type Props = RouteComponentProps<{ address: string }>;
 
-const DeriveButton = styled(Button)`
-  margin-left: 24px;
-  margin-right: 24px;
-  width: auto;
-`;
+function childrenCount (accounts: AccountJson[], parentAddress: string): number {
+  return accounts.filter((account) => account.parentAddress === parentAddress).length;
+}
 
 function Derive ({ match: { params: { address: parentAddress } } }: Props): React.ReactElement<Props> {
   const onAction = useContext(ActionContext);
+  const { accounts } = useContext(AccountContext);
   const [account, setAccount] = useState<null | { address: string; suri: string }>(null);
   const [name, setName] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
   const [parentPassword, setParentPassword] = useState<string | null>(null);
   const [isProperParentPassword, setIsProperParentPassword] = useState(false);
   const [derivationConfirmed, setDerivationConfirmed] = useState(false);
-
   const _onCreate = useCallback(async () => {
     if (!account || !name || !password || !parentPassword) {
       return;
@@ -80,6 +79,7 @@ function Derive ({ match: { params: { address: parentAddress } } }: Props): Reac
         onChange={setAccount}
         parentAddress={parentAddress}
         parentPassword={parentPassword}
+        siblingCount={childrenCount(accounts, parentAddress)}
       />}
       {isProperParentPassword && derivationConfirmed && account && name && <Password onChange={setPassword}/>}
       {isProperParentPassword && derivationConfirmed && account && name && password && (
@@ -97,5 +97,11 @@ function Derive ({ match: { params: { address: parentAddress } } }: Props): Reac
     </>
   );
 }
+
+const DeriveButton = styled(Button)`
+  margin-left: 24px;
+  margin-right: 24px;
+  width: auto;
+`;
 
 export default withRouter(Derive);
