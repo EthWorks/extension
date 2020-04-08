@@ -11,13 +11,12 @@ interface Props {
   onChange: (derivedAccount: { address: string; suri: string } | null) => void;
   parentAddress: string;
   parentPassword: string;
-  siblingCount: number;
+  defaultPath: string;
 }
 
-function DerivationPath ({ onChange, parentAddress, parentPassword, siblingCount }: Props): React.ReactElement<Props> {
-  const [path, setPath] = useState<string>(`//${siblingCount}`);
+function DerivationPath ({ defaultPath, onChange, parentAddress, parentPassword }: Props): React.ReactElement<Props> {
+  const [path, setPath] = useState<string>(defaultPath);
 
-  console.log(path);
   const isPathValid = useCallback(async (path: string): Promise<Result<string>> => {
     try {
       await validateDerivationPath(parentAddress, path, parentPassword);
@@ -36,7 +35,7 @@ function DerivationPath ({ onChange, parentAddress, parentPassword, siblingCount
   return (
     <ValidatedInput
       component={InputWithLabel}
-      defaultValue={`//${siblingCount}`}
+      defaultValue={defaultPath}
       label='Derivation path'
       onValidatedChange={_onChange}
       placeholder='//hard/soft'

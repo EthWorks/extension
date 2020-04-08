@@ -28,10 +28,6 @@ function ValidatedInput<T extends object> ({ className, component: Input, defaul
   useEffect(() => {
     if (!wasMounted) {
       setWasMounted(true);
-
-      if (!defaultValue) {
-        return;
-      }
     }
 
     (async (): Promise<void> => {

@@ -10,13 +10,9 @@ import { AccountContext, ActionContext, Address, Button, ButtonArea, InputWithLa
 import { deriveAccount, validateAccount } from '../../messaging';
 import { DerivationPath, Name, Password } from '../../partials';
 import Step from './Step';
-import { AccountJson } from '@polkadot/extension-base/background/types';
+import { nextDerivationPath } from '@polkadot/extension-ui/utils/nextDerivationPath';
 
 type Props = RouteComponentProps<{ address: string }>;
-
-function childrenCount (accounts: AccountJson[], parentAddress: string): number {
-  return accounts.filter((account) => account.parentAddress === parentAddress).length;
-}
 
 function Derive ({ match: { params: { address: parentAddress } } }: Props): React.ReactElement<Props> {
   const onAction = useContext(ActionContext);
@@ -76,10 +72,10 @@ function Derive ({ match: { params: { address: parentAddress } } }: Props): Reac
         />
       )}
       {isProperParentPassword && derivationConfirmed && parentPassword && name && <DerivationPath
+        defaultPath={nextDerivationPath(accounts, parentAddress)}
         onChange={setAccount}
         parentAddress={parentAddress}
         parentPassword={parentPassword}
-        siblingCount={childrenCount(accounts, parentAddress)}
       />}
       {isProperParentPassword && derivationConfirmed && account && name && <Password onChange={setPassword}/>}
       {isProperParentPassword && derivationConfirmed && account && name && password && (
