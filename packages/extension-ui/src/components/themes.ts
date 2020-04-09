@@ -37,7 +37,6 @@ const darkTheme = {
   labelLineHeight: '18px',
   lineHeight: '26px',
   parentLabelColor: '#4A7463',
-  parentNameColor: '#B3B3B5',
   popupBackground: '#38393F',
   primaryColor: '#FF7D01',
   readonlyInputBackground: '#1A1B20',

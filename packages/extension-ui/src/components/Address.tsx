@@ -100,6 +100,8 @@ function Address ({ actions, address, children, className, genesisHash, name, pa
   const _onClick = useCallback((): void => setShowActionsMenu(!showActionsMenu), [showActionsMenu]);
   const _onCopy = useCallback((): void => show('Copied'), [show]);
 
+  const displayedName = name || (account && account.name) || '<unknown>';
+
   return (
     <div className={className}>
       <div>
@@ -116,10 +118,10 @@ function Address ({ actions, address, children, className, genesisHash, name, pa
                   <ArrowLabel/>
                   <ParentName>{parentName}</ParentName>
                 </Banner>
-                <DisplacedName>{name || (account && account.name) || '<unknown>'}</DisplacedName>
+                <DisplacedName>{displayedName}</DisplacedName>
               </>
             ) : (
-              <Name>{name || (account && account.name) || '<unknown>'}</Name>
+              <Name>{displayedName}</Name>
             )}
             <CopyAddress>
               <FullAddress>{formatted || '<unknown>'}</FullAddress>
@@ -270,7 +272,7 @@ const ChainBanner = styled(Banner)`
 `;
 
 const ParentName = styled.div`
-  padding: 0.3rem 0 0 0.8rem;
+  padding: 0.25rem 0 0 0.8rem;
   font-weight: 600;
   font-size: 10px;
   line-height: 14px;
