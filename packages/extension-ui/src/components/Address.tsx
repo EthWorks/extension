@@ -21,6 +21,7 @@ import DetailsImg from '../assets/details.svg';
 import useOutsideClick from '../hooks/useOutsideClick';
 import useMetadata from '../hooks/useMetadata';
 import useToast from '../hooks/useToast';
+import arrowParentLabel from '../assets/arrowParentLabel.svg';
 
 interface Props {
   address?: string | null;
@@ -109,11 +110,14 @@ function Address ({ actions, address, children, className, genesisHash, name, pa
             value={formatted || address}
           />
           <Info>
-            <Name>{name || (account && account.name) || '<unknown>'}</Name>
+            {parentName && <Banner>
+              <ArrowLabel/>
+              <ParentName>{parentName}</ParentName>
+            </Banner>}
+            <Name paddingTop={parentName ? '10px' : ''}>{name || (account && account.name) || '<unknown>'}</Name>
             <CopyAddress>
               <FullAddress>{formatted || '<unknown>'}</FullAddress>
               {chain?.genesisHash && <ChainBanner>{chain.name}</ChainBanner>}
-              {parentName && <ParentBanner>↳ {parentName}</ParentBanner>}
               <CopyToClipboard text={(formatted && formatted) || ''} >
                 <Svg
                   onClick={_onCopy}
@@ -184,6 +188,7 @@ const Name = styled.div`
   font-weight: 600;
   font-size: 16px;
   line-height: 22px;
+  padding-top: ${(props): string => props.paddingTop}
 `;
 
 const FullAddress = styled.div`
@@ -245,18 +250,35 @@ const Banner = styled.div`
   color: white;
   font-size: 12px;
   line-height: 16px;
-  padding: 0.1rem 0.5rem;
   position: absolute;
-  right: 40px;
   top: 0;
 `;
 
 const ChainBanner = styled(Banner)`
+  padding: 0.1rem 0.5rem;
+  right: 40px;
   background: ${({ theme }): string => theme.primaryColor};
 `;
 
-const ParentBanner = styled(Banner)`
-  background: ${({ theme }): string => theme.parentLabelColor};
+const ParentName = styled.div`
+  padding: 0.3rem 0 0 0.8rem;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 14px;
+  color: ${({ theme }): string => theme.parentNameColor};
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 270px;
+`;
+
+const ArrowLabel = styled(Svg).attrs(() => ({
+  src: arrowParentLabel
+}))`
+  position: absolute;
+  top: 5px;
+  width: 9px;
+  height: 9px;
+  background: ${({ theme }): string => theme.parentNameColor};
 `;
 
 const MovableMenu = styled(Menu) <{ isMoved: boolean }>`
