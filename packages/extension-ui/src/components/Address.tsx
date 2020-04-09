@@ -30,7 +30,7 @@ interface Props {
   children?: React.ReactNode;
   genesisHash?: string | null;
   actions?: React.ReactNode;
-  parentName?: string;
+  parentName?: string | null;
 }
 
 interface Recoded {
@@ -110,11 +110,17 @@ function Address ({ actions, address, children, className, genesisHash, name, pa
             value={formatted || address}
           />
           <Info>
-            {parentName && <Banner>
-              <ArrowLabel/>
-              <ParentName>{parentName}</ParentName>
-            </Banner>}
-            <Name paddingTop={parentName ? '10px' : ''}>{name || (account && account.name) || '<unknown>'}</Name>
+            {parentName ? (
+              <>
+                <Banner>
+                  <ArrowLabel/>
+                  <ParentName>{parentName}</ParentName>
+                </Banner>
+                <DisplacedName>{name || (account && account.name) || '<unknown>'}</DisplacedName>
+              </>
+            ) : (
+              <Name>{name || (account && account.name) || '<unknown>'}</Name>
+            )}
             <CopyAddress>
               <FullAddress>{formatted || '<unknown>'}</FullAddress>
               {chain?.genesisHash && <ChainBanner>{chain.name}</ChainBanner>}
@@ -188,7 +194,10 @@ const Name = styled.div`
   font-weight: 600;
   font-size: 16px;
   line-height: 22px;
-  padding-top: ${(props): string => props.paddingTop}
+`;
+
+const DisplacedName = styled(Name)`
+  padding-top: 10px;
 `;
 
 const FullAddress = styled.div`
@@ -265,7 +274,7 @@ const ParentName = styled.div`
   font-weight: 600;
   font-size: 10px;
   line-height: 14px;
-  color: ${({ theme }): string => theme.parentNameColor};
+  color: ${({ theme }): string => theme.labelColor};
   text-overflow: ellipsis;
   overflow: hidden;
   width: 270px;
@@ -278,7 +287,7 @@ const ArrowLabel = styled(Svg).attrs(() => ({
   top: 5px;
   width: 9px;
   height: 9px;
-  background: ${({ theme }): string => theme.parentNameColor};
+  background: ${({ theme }): string => theme.labelColor};
 `;
 
 const MovableMenu = styled(Menu) <{ isMoved: boolean }>`
