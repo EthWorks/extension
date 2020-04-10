@@ -30,7 +30,7 @@ interface Props {
   children?: React.ReactNode;
   genesisHash?: string | null;
   actions?: React.ReactNode;
-  parentName?: string;
+  parentName?: string | null;
 }
 
 interface Recoded {
@@ -100,6 +100,8 @@ function Address ({ actions, address, children, className, genesisHash, name, pa
   const _onClick = useCallback((): void => setShowActionsMenu(!showActionsMenu), [showActionsMenu]);
   const _onCopy = useCallback((): void => show('Copied'), [show]);
 
+  const displayedName = name || (account && account.name) || '<unknown>';
+
   return (
     <div className={className}>
       <div>
@@ -110,14 +112,20 @@ function Address ({ actions, address, children, className, genesisHash, name, pa
             value={formatted || address}
           />
           <Info>
-            {parentName && <Banner>
-              <ArrowLabel/>
-              <ParentName>{parentName}</ParentName>
-            </Banner>}
-            <Name paddingTop={parentName ? '10px' : ''}>{name || (account && account.name) || '<unknown>'}</Name>
+            {parentName ? (
+              <>
+                <Banner>
+                  <ArrowLabel/>
+                  <ParentName data-field='parent'>{parentName}</ParentName>
+                </Banner>
+                <DisplacedName>{displayedName}</DisplacedName>
+              </>
+            ) : (
+              <Name data-field='name'>{displayedName}</Name>
+            )}
             <CopyAddress>
-              <FullAddress>{formatted || '<unknown>'}</FullAddress>
-              {chain?.genesisHash && <ChainBanner>{chain.name}</ChainBanner>}
+              <FullAddress data-field='address'>{formatted || '<unknown>'}</FullAddress>
+              {chain?.genesisHash && <ChainBanner data-field='chain'>{chain.name}</ChainBanner>}
               <CopyToClipboard text={(formatted && formatted) || ''} >
                 <Svg
                   onClick={_onCopy}
@@ -188,7 +196,10 @@ const Name = styled.div`
   font-weight: 600;
   font-size: 16px;
   line-height: 22px;
-  padding-top: ${(props): string => props.paddingTop}
+`;
+
+const DisplacedName = styled(Name)`
+  padding-top: 10px;
 `;
 
 const FullAddress = styled.div`
@@ -261,11 +272,11 @@ const ChainBanner = styled(Banner)`
 `;
 
 const ParentName = styled.div`
-  padding: 0.3rem 0 0 0.8rem;
+  padding: 0.25rem 0 0 0.8rem;
   font-weight: 600;
   font-size: 10px;
   line-height: 14px;
-  color: ${({ theme }): string => theme.parentNameColor};
+  color: ${({ theme }): string => theme.labelColor};
   text-overflow: ellipsis;
   overflow: hidden;
   width: 270px;
@@ -278,7 +289,7 @@ const ArrowLabel = styled(Svg).attrs(() => ({
   top: 5px;
   width: 9px;
   height: 9px;
-  background: ${({ theme }): string => theme.parentNameColor};
+  background: ${({ theme }): string => theme.labelColor};
 `;
 
 const MovableMenu = styled(Menu) <{ isMoved: boolean }>`
