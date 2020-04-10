@@ -108,7 +108,7 @@ function Address ({ actions, address, children, className, genesisHash, name, pa
         <AccountInfoRow>
           <Identicon
             iconTheme={theme}
-            onCopy={(): void => show('Copied')}
+            onCopy={_onCopy}
             prefix={prefix}
             value={formatted || address}
           />
